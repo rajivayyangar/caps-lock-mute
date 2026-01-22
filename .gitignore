@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+
+# Build artifacts (but NOT capslockmute binary - we include that for users without Xcode)
+*.dSYM/
+*.o
+*.swp
+
+# IDE
+.vscode/
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+
+# Claude Code
+.claude/
