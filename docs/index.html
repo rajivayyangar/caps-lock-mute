@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CapslockMute - Mute Tandem with Caps Lock</title>
+    <title>CapslockMute - Mute Zoom, Tandem, Meet with Caps Lock</title>
     <style>
         :root {
             --primary: #007AFF;
@@ -55,6 +55,37 @@
             font-size: 24px;
             color: var(--text-secondary);
             margin-bottom: 40px;
+        }
+
+        /* Rotating text carousel */
+        .rotating-text {
+            display: inline-block;
+            position: relative;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .rotating-text span {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            animation: rotate-words 6s infinite;
+            white-space: nowrap;
+        }
+
+        .rotating-text span:nth-child(1) { animation-delay: 0s; }
+        .rotating-text span:nth-child(2) { animation-delay: 2s; }
+        .rotating-text span:nth-child(3) { animation-delay: 4s; }
+
+        /* Placeholder to maintain width */
+        .rotating-text::after {
+            content: "Tandem";
+            visibility: hidden;
+        }
+
+        @keyframes rotate-words {
+            0%, 20% { opacity: 1; }
+            25%, 100% { opacity: 0; }
         }
 
         .download-btn {
@@ -229,7 +260,7 @@
         <section class="hero">
             <div class="hero-icon">🎙️</div>
             <h1>CapslockMute</h1>
-            <p class="tagline">Press Caps Lock to mute yourself in Tandem</p>
+            <p class="tagline">Press Caps Lock to mute yourself in <span class="rotating-text"><span>Tandem</span><span>Zoom</span><span>Meet</span></span></p>
             <a href="https://github.com/rajivayyangar/caps-lock-mute/releases/latest/download/CapslockMute-v1.0.zip" class="download-btn">
                 Download for macOS
             </a>
@@ -280,13 +311,19 @@
                         <p>On first launch, macOS will ask for Accessibility permission. This is required to detect your Caps Lock key.</p>
                     </div>
                 </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Select your meeting software</h3>
+                        <p>Choose from Zoom, <a href="https://tandem.chat" style="color: var(--primary);">Tandem</a>, or Meet in the menu bar settings.</p>
+                    </div>
+                </div>
             </div>
 
             <div class="requirements">
                 <h4>Requirements</h4>
                 <ul>
                     <li>macOS 10.15 (Catalina) or later</li>
-                    <li>Tandem app installed</li>
                     <li>No Karabiner-Elements (conflicts with key remapping)</li>
                 </ul>
             </div>
@@ -297,7 +334,7 @@
             <h2>Privacy</h2>
             <div class="privacy">
                 <h3>Your data stays on your Mac</h3>
-                <p>CapslockMute doesn't collect any data. It doesn't connect to the internet. It just listens for Caps Lock and sends a mute shortcut to Tandem. That's it.</p>
+                <p>CapslockMute doesn't collect any data. It doesn't connect to the internet. It just listens for Caps Lock and sends a mute shortcut to Tandem/Zoom/Meet. That's it.</p>
             </div>
         </section>
 
