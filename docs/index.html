@@ -252,6 +252,67 @@
         .requirements li {
             margin-bottom: 4px;
         }
+
+        /* Quote boxes */
+        .quote {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 24px 32px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+            text-align: left;
+        }
+
+        .quote p {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .quote cite {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-style: normal;
+        }
+
+        /* Use cases section */
+        .use-cases {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid #e5e5e7;
+        }
+
+        .use-case-carousel {
+            font-size: 20px;
+            color: var(--text);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .use-case-carousel span {
+            position: absolute;
+            opacity: 0;
+            animation: rotate-use-cases 16s infinite;
+        }
+
+        .use-case-carousel span:nth-child(1) { animation-delay: 0s; }
+        .use-case-carousel span:nth-child(2) { animation-delay: 4s; }
+        .use-case-carousel span:nth-child(3) { animation-delay: 8s; }
+        .use-case-carousel span:nth-child(4) { animation-delay: 12s; }
+
+        @keyframes rotate-use-cases {
+            0%, 20% { opacity: 1; }
+            25%, 100% { opacity: 0; }
+        }
+
+        .use-case-emoji {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
     </style>
 </head>
 <body>
@@ -265,6 +326,11 @@
                 Download for macOS
             </a>
             <span class="version">v1.0 &middot; macOS 10.15+</span>
+
+            <div class="quote">
+                <p>"Caps Lock → Mute is the life hack you didn't know you needed."</p>
+                <cite>— Rajiv</cite>
+            </div>
         </section>
 
         <!-- Features -->
@@ -315,7 +381,7 @@
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>Select your meeting software</h3>
-                        <p>Choose from Zoom, <a href="https://tandem.chat" style="color: var(--primary);">Tandem</a>, or Meet in the menu bar settings.</p>
+                        <p>Choose from Zoom, <a href="https://tandem.chat?utm_source=capslockmute" style="color: var(--primary);">Tandem</a>, or Meet in the menu bar settings.</p>
                     </div>
                 </div>
             </div>
@@ -326,6 +392,22 @@
                     <li>macOS 10.15 (Catalina) or later</li>
                     <li>No Karabiner-Elements (conflicts with key remapping)</li>
                 </ul>
+            </div>
+
+            <div class="quote">
+                <p>"Mute should be muscle memory."</p>
+                <cite>— Rajiv</cite>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="use-cases">
+            <div class="use-case-emoji">🤫</div>
+            <div class="use-case-carousel">
+                <span>About to sneeze? Hit Caps Lock to mute.</span>
+                <span>Want to dictate a note via Aqua Voice while on a call? Hit Caps Lock to mute.</span>
+                <span>Child throwing a tantrum? Hit Caps Lock to mute.</span>
+                <span>Loud car horns near your house? Hit Caps Lock to mute.</span>
             </div>
         </section>
 
