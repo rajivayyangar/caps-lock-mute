@@ -6,10 +6,14 @@
 # Logs
 *.log
 
-# Build artifacts (but NOT capslockmute binary - we include that for users without Xcode)
+# Build artifacts
+build/
+dist/
+*.app/
 *.dSYM/
 *.o
 *.swp
+capslockmute
 
 # IDE
 .vscode/

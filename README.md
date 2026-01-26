@@ -4,6 +4,18 @@ Press **Caps Lock** to toggle your microphone mute in [Tandem](https://tandem.ch
 
 This tool remaps your Caps Lock key to send ⌘⇧M (Command+Shift+M), which is Tandem's mute shortcut.
 
+## Download
+
+**[Download CapslockMute-v1.0.zip](https://github.com/rajivayyangar/caps-lock-mute/releases/latest/download/CapslockMute-v1.0.zip)** (macOS 10.15+)
+
+1. Download and unzip
+2. Drag `CapslockMute.app` to Applications
+3. Launch and grant Accessibility permission when prompted
+
+The app is signed and notarized by Apple — no Gatekeeper warnings.
+
+---
+
 ## Requirements
 
 - macOS 10.15 (Catalina) or later
