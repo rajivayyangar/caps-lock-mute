@@ -7,6 +7,7 @@ class EventTapManager {
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     private var permissionCheckTimer: Timer?
+    private var hasShownPermissionAlert = false
 
     /// Key code for F18 (our proxy key remapped from Caps Lock)
     private let f18KeyCode: CGKeyCode = 0x4F  // 79
@@ -24,9 +25,10 @@ class EventTapManager {
         // Already running
         guard eventTap == nil else { return }
 
-        // Check accessibility - if not granted, start polling
+        // Check accessibility - if not granted, show alert and start polling
         if !checkAccessibility() {
             print("Accessibility permission required. Will retry when granted.")
+            showPermissionAlert()
             startPermissionPolling()
             return
         }
@@ -94,6 +96,28 @@ class EventTapManager {
                 self.permissionCheckTimer = nil
                 print("Accessibility permission granted. Starting event tap.")
                 self.start()
+            }
+        }
+    }
+
+    /// Show alert dialog when permissions are missing
+    private func showPermissionAlert() {
+        guard !hasShownPermissionAlert else { return }
+        hasShownPermissionAlert = true
+
+        DispatchQueue.main.async {
+            let alert = NSAlert()
+            alert.messageText = "Accessibility Permission Required"
+            alert.informativeText = "CapslockMute needs Accessibility permission to detect your Caps Lock key.\n\nIf you recently updated the app, you may need to re-grant this permission."
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "Open System Settings")
+            alert.addButton(withTitle: "Later")
+
+            if alert.runModal() == .alertFirstButtonReturn {
+                // Open Accessibility settings
+                if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+                    NSWorkspace.shared.open(url)
+                }
             }
         }
     }
