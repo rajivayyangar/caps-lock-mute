@@ -21,7 +21,7 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 APP_NAME="CapslockMute"
 APP_BUNDLE="$APP_NAME.app"
 BUNDLE_ID="com.rajiv.capslockmute"
-VERSION="1.1"
+VERSION="1.2"
 SIGNING_IDENTITY="Developer ID Application: Rajiv Ayyangar (49Z88YPG95)"
 NOTARY_PROFILE="CapslockMute"
 

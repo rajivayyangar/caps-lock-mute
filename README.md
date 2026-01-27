@@ -6,7 +6,7 @@ This tool remaps your Caps Lock key to send ⌘⇧M (Command+Shift+M), which is 
 
 ## Download
 
-**[Download CapslockMute-v1.1.zip](https://github.com/rajivayyangar/caps-lock-mute/releases/latest/download/CapslockMute-v1.1.zip)** (macOS 10.15+)
+**[Download CapslockMute-v1.2.zip](https://github.com/rajivayyangar/caps-lock-mute/releases/latest/download/CapslockMute-v1.2.zip)** (macOS 10.15+)
 
 1. Download and unzip
 2. Drag `CapslockMute.app` to Applications
