@@ -56,7 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem.separator())
 
         // Version footer (disabled)
-        let versionItem = NSMenuItem(title: "v1.0 by Rajiv, \u{00A9}2026", action: nil, keyEquivalent: "")
+        let versionItem = NSMenuItem(title: "v1.1 by Rajiv, \u{00A9}2026", action: nil, keyEquivalent: "")
         versionItem.isEnabled = false
         menu.addItem(versionItem)
 

@@ -9,7 +9,7 @@ LAUNCH_AGENTS_DIR="$HOME/Library/LaunchAgents"
 
 echo ""
 echo "========================================="
-echo "   Caps Lock Mute - Installer v1.0      "
+echo "   Caps Lock Mute - Installer v1.1      "
 echo "========================================="
 echo ""
 
