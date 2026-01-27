@@ -6,6 +6,7 @@ class EventTapManager {
 
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
+    private var permissionCheckTimer: Timer?
 
     /// Key code for F18 (our proxy key remapped from Caps Lock)
     private let f18KeyCode: CGKeyCode = 0x4F  // 79
@@ -20,9 +21,14 @@ class EventTapManager {
 
     /// Start the event tap
     func start() {
-        // Check accessibility
+        // Already running
+        guard eventTap == nil else { return }
+
+        // Check accessibility - if not granted, start polling
         if !checkAccessibility() {
-            print("Accessibility permission required.")
+            print("Accessibility permission required. Will retry when granted.")
+            startPermissionPolling()
+            return
         }
 
         // Create event tap for key events
@@ -63,6 +69,9 @@ class EventTapManager {
 
     /// Stop the event tap
     func stop() {
+        permissionCheckTimer?.invalidate()
+        permissionCheckTimer = nil
+
         if let tap = eventTap {
             CGEvent.tapEnable(tap: tap, enable: false)
         }
@@ -71,6 +80,22 @@ class EventTapManager {
         }
         eventTap = nil
         runLoopSource = nil
+    }
+
+    /// Start polling for accessibility permission
+    private func startPermissionPolling() {
+        // Don't start multiple timers
+        guard permissionCheckTimer == nil else { return }
+
+        permissionCheckTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if AXIsProcessTrusted() {
+                self.permissionCheckTimer?.invalidate()
+                self.permissionCheckTimer = nil
+                print("Accessibility permission granted. Starting event tap.")
+                self.start()
+            }
+        }
     }
 
     /// Handle an event from the tap
