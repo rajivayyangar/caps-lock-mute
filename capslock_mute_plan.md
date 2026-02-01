@@ -84,3 +84,39 @@ caps-lock-mute/
 2. **No actual Caps Lock** — you lose the key entirely
 3. **Secure input** — won't work in password fields (intentional)
 4. **Per-keyboard** — hidutil applies to all keyboards by default
+
+## Release Checklist
+
+### 1. Bump version numbers
+Update version in these files:
+- [ ] `Scripts/build-release.sh` — line 24: `VERSION="X.Y"`
+- [ ] `Sources/AppDelegate.swift` — version footer in `buildMenu()`
+- [ ] `docs/index.html` — download URL and version text (2 places)
+
+### 2. Build, sign, and notarize
+```bash
+./Scripts/build-release.sh
+```
+Output: `dist/CapslockMute-vX.Y.zip`
+
+### 3. Create GitHub release
+```bash
+gh release create vX.Y dist/CapslockMute-vX.Y.zip \
+  --title "vX.Y - Title" \
+  --notes "## What's New
+- Feature 1
+- Feature 2"
+```
+
+### 4. Commit and push
+```bash
+git add -A
+git commit -m "Release vX.Y - Description"
+git push
+```
+This updates GitHub Pages automatically (serves from `docs/` folder).
+
+### 5. Verify
+- [ ] Visit https://capslockmute.com — confirm version updated
+- [ ] Download link works and points to new version
+- [ ] GitHub release page shows correctly
