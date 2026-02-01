@@ -12,6 +12,10 @@ class EventTapManager {
     /// Key code for F18 (our proxy key remapped from Caps Lock)
     private let f18KeyCode: CGKeyCode = 0x4F  // 79
 
+    /// Double-tap detection
+    private var lastF18PressTime: Date?
+    private let doubleTapThreshold: TimeInterval = 0.3  // 300ms
+
     private init() {}
 
     /// Check if accessibility permission is granted
@@ -145,7 +149,29 @@ class EventTapManager {
 
         // Check for F18
         if keyCode == f18KeyCode {
-            postShortcut()
+            let now = Date()
+            let isDoubleTap: Bool
+
+            if let lastPress = lastF18PressTime,
+               now.timeIntervalSince(lastPress) < doubleTapThreshold {
+                // Double tap detected
+                isDoubleTap = true
+                lastF18PressTime = nil  // Reset to avoid triple-tap issues
+            } else {
+                // Single press (so far)
+                isDoubleTap = false
+                lastF18PressTime = now
+            }
+
+            if isDoubleTap {
+                // Double tap: toggle LED only (no mute shortcut)
+                LEDController.shared.toggle()
+            } else {
+                // Single press: toggle LED and send mute shortcut
+                LEDController.shared.toggle()
+                postShortcut()
+            }
+
             return nil  // Suppress the original F18 event
         }
 

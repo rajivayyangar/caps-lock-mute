@@ -21,7 +21,7 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 APP_NAME="CapslockMute"
 APP_BUNDLE="$APP_NAME.app"
 BUNDLE_ID="com.rajiv.capslockmute"
-VERSION="1.2"
+VERSION="1.3"
 SIGNING_IDENTITY="Developer ID Application: Rajiv Ayyangar (49Z88YPG95)"
 NOTARY_PROFILE="CapslockMute"
 
@@ -51,6 +51,7 @@ echo "Step 2/6: Compiling with optimizations..."
 SWIFT_FILES=(
     "$PROJECT_DIR/Sources/MuteShortcut.swift"
     "$PROJECT_DIR/Sources/SettingsManager.swift"
+    "$PROJECT_DIR/Sources/LEDController.swift"
     "$PROJECT_DIR/Sources/EventTapManager.swift"
     "$PROJECT_DIR/Sources/AppDelegate.swift"
     "$PROJECT_DIR/Sources/main.swift"
@@ -64,11 +65,34 @@ swiftc -O \
 # Copy resources
 cp "$PROJECT_DIR/Info.plist" "$BUILD_DIR/$APP_BUNDLE/Contents/"
 cp "$PROJECT_DIR/Resources/AppIcon.icns" "$BUILD_DIR/$APP_BUNDLE/Contents/Resources/"
-echo "         Compiled successfully"
+
+# Copy LED control binary
+LED_BINARY="$PROJECT_DIR/Resources/keyboard-leds"
+if [ -f "$LED_BINARY" ]; then
+    cp "$LED_BINARY" "$BUILD_DIR/$APP_BUNDLE/Contents/MacOS/"
+    chmod +x "$BUILD_DIR/$APP_BUNDLE/Contents/MacOS/keyboard-leds"
+    echo "         Compiled successfully (with LED binary)"
+else
+    echo "         WARNING: LED binary not found at $LED_BINARY"
+    echo "         Build from https://github.com/moeindanesh/capslock-led"
+    echo "         and place at Resources/keyboard-leds"
+    echo "         Compiled successfully (without LED binary)"
+fi
 echo ""
 
 # Code sign with Developer ID
 echo "Step 3/6: Code signing with Developer ID..."
+
+# Sign the LED binary first (if present) - must be signed before the app bundle
+LED_BINARY_PATH="$BUILD_DIR/$APP_BUNDLE/Contents/MacOS/keyboard-leds"
+if [ -f "$LED_BINARY_PATH" ]; then
+    codesign --force --options runtime --timestamp \
+        --sign "$SIGNING_IDENTITY" \
+        "$LED_BINARY_PATH"
+    echo "         Signed keyboard-leds binary"
+fi
+
+# Sign the main app bundle
 codesign --force --options runtime --timestamp \
     --sign "$SIGNING_IDENTITY" \
     "$BUILD_DIR/$APP_BUNDLE"

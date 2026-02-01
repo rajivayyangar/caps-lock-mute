@@ -41,6 +41,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(NSMenuItem.separator())
 
+        // LED sync hint
+        let ledHintItem = NSMenuItem(title: "LED out of sync? \u{2192} double tap Caps Lock", action: nil, keyEquivalent: "")
+        ledHintItem.isEnabled = false
+        menu.addItem(ledHintItem)
+
+        menu.addItem(NSMenuItem.separator())
+
         // Send feedback
         let feedbackItem = NSMenuItem(title: "Send feedback", action: #selector(sendFeedback), keyEquivalent: "")
         feedbackItem.target = self
@@ -56,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem.separator())
 
         // Version footer (disabled)
-        let versionItem = NSMenuItem(title: "v1.2 by Rajiv, \u{00A9}2026", action: nil, keyEquivalent: "")
+        let versionItem = NSMenuItem(title: "v1.3 by Rajiv, \u{00A9}2026", action: nil, keyEquivalent: "")
         versionItem.isEnabled = false
         menu.addItem(versionItem)
 
